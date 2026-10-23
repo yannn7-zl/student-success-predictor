@@ -1,0 +1,61 @@
+/* ============================================================
+   GraduAItion — Custom Range Slider & Design Utilities
+   ============================================================ */
+
+/* Clean Custom Emerald Range Slider */
+input[type="range"].slider-green {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: #E8E4DC;
+  border-radius: 9999px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+input[type="range"].slider-green::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 3px solid #00875A;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+input[type="range"].slider-green::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  border-color: #006644;
+}
+
+input[type="range"].slider-green::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 3px solid #00875A;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF8F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #DFE1E6;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C1C7D0;
+}

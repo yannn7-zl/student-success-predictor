@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}GraduAItion — Prediksi Kelulusan Mahasiswa{% endblock %}</title>
+
+  <!-- Google Fonts: Playfair Display (Serif) & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6.5 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#00875A',
+              hover: '#006644',
+              light: '#E3FCEF',
+              tint: '#F4FBF7',
+            },
+            warm: {
+              bg: '#FAF8F5',
+              card: '#FFFFFF',
+              border: '#EFECE6',
+              text: '#2D312E',
+              muted: '#717671',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS for Range Sliders & Smooth Animations -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="bg-[#FAF8F5] text-[#2D312E] font-sans antialiased selection:bg-[#00875A] selection:text-white min-h-screen flex flex-col">
+
+  <!-- ============================================================
+       TOP STICKY NAVBAR (SESUAI DOKUMENTASI GAMBAR DOSEN)
+       ============================================================ -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-[#FAF8F5]/90 border-b border-[#EFECE6] py-3 transition-all duration-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between">
+        
+        <!-- Brand Logo -->
+        <a href="{{ url_for('index') }}" class="flex items-center gap-2.5 group">
+          <div class="w-9 h-9 rounded-full bg-[#00875A] flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform">
+            <i class="fa-solid fa-graduation-cap text-base"></i>
+          </div>
+          <span class="font-bold text-xl tracking-tight text-[#172B4D]">
+            Gradu<span class="text-[#D97706]">AI</span>tion
+          </span>
+        </a>
+
+        <!-- Central Menu Navigation (Setiap menu beda isi) -->
+        <nav class="hidden md:flex items-center bg-white p-1 rounded-full border border-[#E8E4DC] shadow-sm">
+          <a href="{{ url_for('index') }}" 
+             class="px-4 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-all
+             {% if active_menu == 'beranda' %}bg-[#00875A] text-white shadow-sm{% else %}text-[#5E6C84] hover:text-[#172B4D] hover:bg-slate-50{% endif %}">
+            <i class="fa-solid fa-sparkles text-[11px] {% if active_menu == 'beranda' %}text-white{% else %}text-slate-400{% endif %}"></i>
+            Beranda
+          </a>
+
+          <a href="{{ url_for('dataset_page') }}" 
+             class="px-4 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-all
+             {% if active_menu == 'dataset' %}bg-[#00875A] text-white shadow-sm{% else %}text-[#5E6C84] hover:text-[#172B4D] hover:bg-slate-50{% endif %}">
+            <i class="fa-solid fa-database text-[11px] {% if active_menu == 'dataset' %}text-white{% else %}text-slate-400{% endif %}"></i>
+            Dataset
+          </a>
+
+          <a href="{{ url_for('model_page') }}" 
+             class="px-4 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-all
+             {% if active_menu == 'model' %}bg-[#00875A] text-white shadow-sm{% else %}text-[#5E6C84] hover:text-[#172B4D] hover:bg-slate-50{% endif %}">
+            <i class="fa-solid fa-microchip text-[11px] {% if active_menu == 'model' %}text-white{% else %}text-slate-400{% endif %}"></i>
+            Model
+          </a>
+
+          <a href="{{ url_for('prediksi_page') }}" 
+             class="px-4 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-all
+             {% if active_menu == 'prediksi' %}bg-[#00875A] text-white shadow-sm{% else %}text-[#5E6C84] hover:text-[#172B4D] hover:bg-slate-50{% endif %}">
+            <i class="fa-solid fa-gauge-high text-[11px] {% if active_menu == 'prediksi' %}text-white{% else %}text-slate-400{% endif %}"></i>
+            Prediksi
+          </a>
+
+          <a href="{{ url_for('ai_studio_page') }}" 
+             class="px-4 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-all
+             {% if active_menu == 'ai_studio' %}bg-[#00875A] text-white shadow-sm{% else %}text-[#5E6C84] hover:text-[#172B4D] hover:bg-slate-50{% endif %}">
+            <i class="fa-solid fa-wand-magic-sparkles text-[11px] {% if active_menu == 'ai_studio' %}text-white{% else %}text-slate-400{% endif %}"></i>
+            AI Studio
+          </a>
+        </nav>
+
+        <!-- Status Tag (Seperti di gambar dosen) -->
+        <div class="flex items-center gap-2">
+          <div class="px-3.5 py-1.5 rounded-full bg-[#E3FCEF] border border-[#ABF5D1] text-[#006644] text-xs font-semibold flex items-center gap-2 shadow-xs">
+            <span class="w-2 h-2 rounded-full bg-[#36B37E] animate-pulse"></span>
+            <span>Engine Python · :5000 · Scikit-Learn</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       DYNAMIC PAGE CONTENT
+       ============================================================ -->
+  <main class="flex-grow">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ============================================================
+       CLEAN FOOTER
+       ============================================================ -->
+  <footer class="bg-white border-t border-[#EFECE6] py-8 mt-16 text-xs text-[#717671]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-[#172B4D]">GraduAItion</span>
+        <span>— Sistem Analisis & Prediksi Kelulusan Mahasiswa</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span>Dataset: UCI Predict Students' Dropout (ID 697)</span>
+        <span>•</span>
+        <a href="{{ url_for('health') }}" target="_blank" class="hover:text-[#00875A] transition-colors">Health API</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

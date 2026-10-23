@@ -1,0 +1,390 @@
+{
+  "target_column": "Target",
+  "feature_names": [
+    "Marital Status",
+    "Application mode",
+    "Application order",
+    "Course",
+    "Daytime/evening attendance",
+    "Previous qualification",
+    "Previous qualification (grade)",
+    "Nacionality",
+    "Mother's qualification",
+    "Father's qualification",
+    "Mother's occupation",
+    "Father's occupation",
+    "Admission grade",
+    "Displaced",
+    "Educational special needs",
+    "Debtor",
+    "Tuition fees up to date",
+    "Gender",
+    "Scholarship holder",
+    "Age at enrollment",
+    "International",
+    "Curricular units 1st sem (credited)",
+    "Curricular units 1st sem (enrolled)",
+    "Curricular units 1st sem (evaluations)",
+    "Curricular units 1st sem (approved)",
+    "Curricular units 1st sem (grade)",
+    "Curricular units 1st sem (without evaluations)",
+    "Curricular units 2nd sem (credited)",
+    "Curricular units 2nd sem (enrolled)",
+    "Curricular units 2nd sem (evaluations)",
+    "Curricular units 2nd sem (approved)",
+    "Curricular units 2nd sem (grade)",
+    "Curricular units 2nd sem (without evaluations)",
+    "Unemployment rate",
+    "Inflation rate",
+    "GDP"
+  ],
+  "classes": [
+    "Dropout",
+    "Enrolled",
+    "Graduate"
+  ],
+  "test_size": 0.2,
+  "random_state": 42,
+  "n_estimators": 300,
+  "accuracy": 0.7559322033898305,
+  "balanced_accuracy": 0.7083203232982038,
+  "cv_accuracy_mean": 0.7719229491014137,
+  "classification_report": {
+    "Dropout": {
+      "precision": 0.8305785123966942,
+      "recall": 0.7077464788732394,
+      "f1-score": 0.7642585551330798,
+      "support": 284.0
+    },
+    "Enrolled": {
+      "precision": 0.478494623655914,
+      "recall": 0.559748427672956,
+      "f1-score": 0.5159420289855072,
+      "support": 159.0
+    },
+    "Graduate": {
+      "precision": 0.8293216630196937,
+      "recall": 0.8574660633484162,
+      "f1-score": 0.8431590656284761,
+      "support": 442.0
+    },
+    "accuracy": 0.7559322033898305,
+    "macro avg": {
+      "precision": 0.712798266357434,
+      "recall": 0.7083203232982038,
+      "f1-score": 0.7077865499156877,
+      "support": 885.0
+    },
+    "weighted avg": {
+      "precision": 0.7666950482900069,
+      "recall": 0.7559322033898305,
+      "f1-score": 0.7590514342082223,
+      "support": 885.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      201,
+      47,
+      36
+    ],
+    [
+      28,
+      89,
+      42
+    ],
+    [
+      13,
+      50,
+      379
+    ]
+  ],
+  "models_arena": {
+    "rf": {
+      "name": "Random Forest",
+      "badge": "Champion (Juara 1)",
+      "desc": "Ensemble 300 pohon keputusan dengan bootstrap aggregation dan random feature subset.",
+      "accuracy": 0.7559322033898305,
+      "balanced_accuracy": 0.7083203232982038,
+      "cv_accuracy_mean": 0.7719229491014137,
+      "cv_accuracy_std": 0.012865921278068413,
+      "confusion_matrix": [
+        [
+          201,
+          47,
+          36
+        ],
+        [
+          28,
+          89,
+          42
+        ],
+        [
+          13,
+          50,
+          379
+        ]
+      ],
+      "classification_report": {
+        "Dropout": {
+          "precision": 0.8305785123966942,
+          "recall": 0.7077464788732394,
+          "f1-score": 0.7642585551330798,
+          "support": 284.0
+        },
+        "Enrolled": {
+          "precision": 0.478494623655914,
+          "recall": 0.559748427672956,
+          "f1-score": 0.5159420289855072,
+          "support": 159.0
+        },
+        "Graduate": {
+          "precision": 0.8293216630196937,
+          "recall": 0.8574660633484162,
+          "f1-score": 0.8431590656284761,
+          "support": 442.0
+        },
+        "accuracy": 0.7559322033898305,
+        "macro avg": {
+          "precision": 0.712798266357434,
+          "recall": 0.7083203232982038,
+          "f1-score": 0.7077865499156877,
+          "support": 885.0
+        },
+        "weighted avg": {
+          "precision": 0.7666950482900069,
+          "recall": 0.7559322033898305,
+          "f1-score": 0.7590514342082223,
+          "support": 885.0
+        }
+      }
+    },
+    "lr": {
+      "name": "Logistic Regression",
+      "badge": "Runner-Up (Juara 2)",
+      "desc": "Model linear probabilistik dengan regularisasi L2 dan standardisasi skala data.",
+      "accuracy": 0.7288135593220338,
+      "balanced_accuracy": 0.7047335952308518,
+      "cv_accuracy_mean": 0.746604545338344,
+      "cv_accuracy_std": 0.01205598563815423,
+      "confusion_matrix": [
+        [
+          194,
+          66,
+          24
+        ],
+        [
+          24,
+          102,
+          33
+        ],
+        [
+          11,
+          82,
+          349
+        ]
+      ],
+      "classification_report": {
+        "Dropout": {
+          "precision": 0.8471615720524017,
+          "recall": 0.6830985915492958,
+          "f1-score": 0.7563352826510721,
+          "support": 284.0
+        },
+        "Enrolled": {
+          "precision": 0.408,
+          "recall": 0.6415094339622641,
+          "f1-score": 0.49877750611246946,
+          "support": 159.0
+        },
+        "Graduate": {
+          "precision": 0.8596059113300493,
+          "recall": 0.7895927601809954,
+          "f1-score": 0.8231132075471698,
+          "support": 442.0
+        },
+        "accuracy": 0.7288135593220338,
+        "macro avg": {
+          "precision": 0.704922494460817,
+          "recall": 0.7047335952308518,
+          "f1-score": 0.6927419987702371,
+          "support": 885.0
+        },
+        "weighted avg": {
+          "precision": 0.7744764963511456,
+          "recall": 0.7288135593220338,
+          "f1-score": 0.7434134254018487,
+          "support": 885.0
+        }
+      }
+    },
+    "cart": {
+      "name": "CART (Decision Tree)",
+      "badge": "Juara 3",
+      "desc": "Pohon keputusan tunggal berbasis kriteria Gini impurity dengan batas kedalaman optimal.",
+      "accuracy": 0.6734463276836158,
+      "balanced_accuracy": 0.6715548658733853,
+      "cv_accuracy_mean": 0.6878382800316997,
+      "cv_accuracy_std": 0.013565413970360502,
+      "confusion_matrix": [
+        [
+          187,
+          72,
+          25
+        ],
+        [
+          26,
+          107,
+          26
+        ],
+        [
+          20,
+          120,
+          302
+        ]
+      ],
+      "classification_report": {
+        "Dropout": {
+          "precision": 0.8025751072961373,
+          "recall": 0.6584507042253521,
+          "f1-score": 0.723404255319149,
+          "support": 284.0
+        },
+        "Enrolled": {
+          "precision": 0.35785953177257523,
+          "recall": 0.6729559748427673,
+          "f1-score": 0.4672489082969432,
+          "support": 159.0
+        },
+        "Graduate": {
+          "precision": 0.8555240793201133,
+          "recall": 0.6832579185520362,
+          "f1-score": 0.759748427672956,
+          "support": 442.0
+        },
+        "accuracy": 0.6734463276836158,
+        "macro avg": {
+          "precision": 0.671986239462942,
+          "recall": 0.6715548658733853,
+          "f1-score": 0.6501338637630161,
+          "support": 885.0
+        },
+        "weighted avg": {
+          "precision": 0.7491216260829746,
+          "recall": 0.6734463276836158,
+          "f1-score": 0.6955346779223717,
+          "support": 885.0
+        }
+      }
+    },
+    "nb": {
+      "name": "Gaussian Naive Bayes",
+      "badge": "Juara 4",
+      "desc": "Pengklasifikasi probabilistik berbasis Teorema Bayes dengan asumsi independensi fitur Gaussian.",
+      "accuracy": 0.6587570621468927,
+      "balanced_accuracy": 0.557891583352339,
+      "cv_accuracy_mean": 0.6778937546335353,
+      "cv_accuracy_std": 0.010464051008327912,
+      "confusion_matrix": [
+        [
+          189,
+          32,
+          63
+        ],
+        [
+          40,
+          29,
+          90
+        ],
+        [
+          32,
+          45,
+          365
+        ]
+      ],
+      "classification_report": {
+        "Dropout": {
+          "precision": 0.7241379310344828,
+          "recall": 0.6654929577464789,
+          "f1-score": 0.6935779816513762,
+          "support": 284.0
+        },
+        "Enrolled": {
+          "precision": 0.27358490566037735,
+          "recall": 0.18238993710691823,
+          "f1-score": 0.2188679245283019,
+          "support": 159.0
+        },
+        "Graduate": {
+          "precision": 0.7046332046332047,
+          "recall": 0.8257918552036199,
+          "f1-score": 0.7604166666666666,
+          "support": 442.0
+        },
+        "accuracy": 0.6587570621468927,
+        "macro avg": {
+          "precision": 0.5674520137760216,
+          "recall": 0.557891583352339,
+          "f1-score": 0.5576208576154483,
+          "support": 885.0
+        },
+        "weighted avg": {
+          "precision": 0.6334497727250503,
+          "recall": 0.6587570621468927,
+          "f1-score": 0.6416726705713643,
+          "support": 885.0
+        }
+      }
+    }
+  },
+  "top_features": [
+    {
+      "name": "Curricular units 2nd sem (approved)",
+      "importance": 0.12301693730142811
+    },
+    {
+      "name": "Curricular units 2nd sem (grade)",
+      "importance": 0.09284373597296285
+    },
+    {
+      "name": "Curricular units 1st sem (approved)",
+      "importance": 0.07344237219605158
+    },
+    {
+      "name": "Curricular units 1st sem (grade)",
+      "importance": 0.06299862861781984
+    },
+    {
+      "name": "Admission grade",
+      "importance": 0.04748441127667994
+    },
+    {
+      "name": "Curricular units 2nd sem (evaluations)",
+      "importance": 0.04638344923057395
+    },
+    {
+      "name": "Previous qualification (grade)",
+      "importance": 0.042402917635392834
+    },
+    {
+      "name": "Age at enrollment",
+      "importance": 0.041474024451429496
+    },
+    {
+      "name": "Curricular units 1st sem (evaluations)",
+      "importance": 0.0396881484329983
+    },
+    {
+      "name": "Tuition fees up to date",
+      "importance": 0.039506331152083615
+    },
+    {
+      "name": "Course",
+      "importance": 0.033890389218041765
+    },
+    {
+      "name": "Father's occupation",
+      "importance": 0.03352285235517983
+    }
+  ]
+}

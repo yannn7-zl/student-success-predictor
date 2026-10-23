@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}AI Studio & Batch Analytics — GraduAItion{% endblock %}
+
+{% block content %}
+<div class="py-8 sm:py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Title -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+      <div>
+        <div class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#00875A] mb-1">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> AI Studio &amp; Batch Analytics
+        </div>
+        <h1 class="font-serif text-3xl sm:text-4xl font-bold text-[#172B4D] tracking-tight">Prediksi Massal &amp; Rekomendasi AI</h1>
+        <p class="text-sm text-[#5E6C84] mt-1">Unggah dataset CSV mahasiswa untuk klasifikasi skala besar sekaligus.</p>
+      </div>
+
+      <a href="{{ url_for('download_sample_csv') }}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white hover:bg-slate-50 border border-slate-300 text-xs font-semibold text-slate-700 shadow-xs self-start md:self-auto">
+        <i class="fa-solid fa-file-arrow-down text-[#00875A]"></i> Download Sampel Template CSV
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Upload Box (Left Column) -->
+      <div class="lg:col-span-7 bg-white p-8 sm:p-10 rounded-3xl border border-[#EFECE6] shadow-xs">
+        <div class="text-center max-w-md mx-auto space-y-4 mb-6">
+          <div class="w-16 h-16 rounded-2xl bg-[#E3FCEF] text-[#00875A] flex items-center justify-center text-3xl mx-auto shadow-xs">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+          </div>
+          <h2 class="text-xl font-bold text-[#172B4D]">Unggah Berkas CSV Mahasiswa</h2>
+          <p class="text-xs text-[#5E6C84] leading-relaxed">
+            Sistem akan secara otomatis membaca dan memprediksi status kelulusan setiap baris mahasiswa menggunakan model Random Forest.
+          </p>
+        </div>
+
+        <form action="{{ url_for('predict_csv') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+          <div class="border-2 border-dashed border-[#DFE1E6] hover:border-[#00875A] transition-colors rounded-2xl p-6 text-center bg-[#FAF8F5]">
+            <input type="file" name="file" accept=".csv" required class="block w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-[#E3FCEF] file:text-[#006644] hover:file:bg-[#c2f7db] cursor-pointer">
+            <p class="text-[11px] text-slate-400 mt-2">Maksimal 10.000 baris per file CSV</p>
+          </div>
+
+          <div class="flex items-center justify-between pt-2">
+            <span class="text-xs text-slate-500">
+              <i class="fa-solid fa-circle-check text-[#00875A] mr-1"></i> Mendukung format CSV UTF-8
+            </span>
+            <button type="submit" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#00875A] hover:bg-[#006644] text-white font-bold text-xs shadow-sm transition-all hover:scale-[1.02]">
+              <i class="fa-solid fa-bolt"></i> Mulai Prediksi Batch
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- AI Assistant Insight Cards (Right Column) -->
+      <div class="lg:col-span-5 space-y-5">
+        
+        <!-- Insight Card 1 -->
+        <div class="bg-white p-6 rounded-3xl border border-[#EFECE6] shadow-xs">
+          <div class="flex items-center gap-2.5 text-xs font-bold text-[#00875A] mb-2">
+            <i class="fa-solid fa-robot"></i> Rekomendasi Penyelamatan Akademik
+          </div>
+          <h3 class="font-bold text-base text-[#172B4D] mb-2">Intervensi Sebelum Semester 3</h3>
+          <p class="text-xs text-[#5E6C84] leading-relaxed">
+            Data mining membuktikan bahwa lebih dari <strong>70% kasus putus kuliah</strong> telah memperlihatkan tanda peringatan sejak semester 1 dan 2 (rasio kelulusan SKS &lt; 50%). Konseling terarah pada masa ini paling efektif membalikkan nasib akademik mahasiswa.
+          </p>
+        </div>
+
+        <!-- Insight Card 2 -->
+        <div class="bg-white p-6 rounded-3xl border border-[#EFECE6] shadow-xs">
+          <div class="flex items-center gap-2.5 text-xs font-bold text-amber-600 mb-2">
+            <i class="fa-solid fa-shield-halved"></i> Skema Bantuan Finansial
+          </div>
+          <h3 class="font-bold text-base text-[#172B4D] mb-2">Dampak Pelunasan SPP</h3>
+          <p class="text-xs text-[#5E6C84] leading-relaxed">
+            Tunggakan biaya perkuliahan menempati peringkat ke-6 fitur paling berpengaruh dalam pemutusan studi. Mahasiswa dengan kendala finansial yang diberikan opsi cicilan atau beasiswa memiliki peluang kelulusan <strong>2,4x lebih tinggi</strong>.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+{% endblock %}

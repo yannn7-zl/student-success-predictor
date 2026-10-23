@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% block title %}Eksplorasi Dataset — GraduAItion{% endblock %}
+
+{% block content %}
+<div class="py-8 sm:py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Section Title -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+      <div>
+        <div class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#00875A] mb-1">
+          <i class="fa-solid fa-database"></i> Exploratory Data Analysis
+        </div>
+        <h1 class="font-serif text-3xl sm:text-4xl font-bold text-[#172B4D] tracking-tight">Dataset Mahasiswa (UCI ID 697)</h1>
+        <p class="text-sm text-[#5E6C84] mt-1">Eksplorasi 4.424 data mahasiswa nyata dengan 36 atribut akademik, demografi, dan sosio-ekonomi.</p>
+      </div>
+
+      <a href="{{ url_for('download_sample_csv') }}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white hover:bg-slate-50 border border-slate-300 text-xs font-semibold text-slate-700 shadow-xs self-start md:self-auto">
+        <i class="fa-solid fa-download text-[#00875A]"></i> Download Sampel CSV
+      </a>
+    </div>
+
+    <!-- 2 Column Chart & Summary -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
+      
+      <!-- Donut Chart -->
+      <div class="lg:col-span-5 bg-white p-6 rounded-3xl border border-[#EFECE6] shadow-xs flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-bold text-base text-[#172B4D]">Distribusi Status Akhir</h3>
+            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#E3FCEF] text-[#006644]">3 Kategori</span>
+          </div>
+          <p class="text-xs text-slate-500 mb-6">Proporsi mahasiswa yang berhasil lulus, putus studi, maupun masih aktif kuliah.</p>
+          
+          <div class="relative max-w-[260px] mx-auto mb-6">
+            <canvas id="datasetDonutChart"></canvas>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2.5 pt-4 border-t border-slate-100 text-center">
+          <div class="bg-slate-50 p-3 rounded-2xl">
+            <span class="w-2 h-2 rounded-full bg-[#00875A] inline-block mb-1"></span>
+            <p class="text-[11px] font-bold text-slate-700">Lulus</p>
+            <p class="text-sm font-extrabold text-[#00875A]">49.9%</p>
+            <p class="text-[10px] text-slate-400">2.209 mhs</p>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-2xl">
+            <span class="w-2 h-2 rounded-full bg-rose-500 inline-block mb-1"></span>
+            <p class="text-[11px] font-bold text-slate-700">Putus Studi</p>
+            <p class="text-sm font-extrabold text-rose-600">32.1%</p>
+            <p class="text-[10px] text-slate-400">1.421 mhs</p>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-2xl">
+            <span class="w-2 h-2 rounded-full bg-amber-500 inline-block mb-1"></span>
+            <p class="text-[11px] font-bold text-slate-700">Aktif</p>
+            <p class="text-sm font-extrabold text-amber-600">17.9%</p>
+            <p class="text-[10px] text-slate-400">794 mhs</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detail Fitur & Insight -->
+      <div class="lg:col-span-7 bg-white p-6 rounded-3xl border border-[#EFECE6] shadow-xs space-y-6">
+        <div>
+          <h3 class="font-bold text-base text-[#172B4D] mb-1">Komposisi 36 Atribut Masukan</h3>
+          <p class="text-xs text-slate-500">Atribut diklasifikasikan ke dalam 4 domain utama untuk menangkap pola multi-dimensi:</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div class="p-4 rounded-2xl bg-[#FAF8F5] border border-[#EFECE6]">
+            <div class="flex items-center gap-2 font-bold text-[#172B4D] mb-1.5">
+              <i class="fa-solid fa-book-open text-[#00875A]"></i> Akademik (12 Atribut)
+            </div>
+            <p class="text-slate-600 leading-relaxed text-[11px]">
+              SKS yang diambil, lulus, dievaluasi, dan indeks prestasi semester 1 & 2. Domain dengan korelasi tertinggi terhadap kelulusan.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-[#FAF8F5] border border-[#EFECE6]">
+            <div class="flex items-center gap-2 font-bold text-[#172B4D] mb-1.5">
+              <i class="fa-solid fa-coins text-amber-600"></i> Sosio-Ekonomi (10 Atribut)
+            </div>
+            <p class="text-slate-600 leading-relaxed text-[11px]">
+              Status SPP, beasiswa, tunggakan hutang, tingkat pendidikan & pekerjaan orang tua, serta indikator inflasi dan GDP wilayah.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-[#FAF8F5] border border-[#EFECE6]">
+            <div class="flex items-center gap-2 font-bold text-[#172B4D] mb-1.5">
+              <i class="fa-solid fa-id-card text-brand"></i> Demografi (6 Atribut)
+            </div>
+            <p class="text-slate-600 leading-relaxed text-[11px]">
+              Status pernikahan, jenis kelamin, usia saat pendaftaran, status perpindahan/rantau, dan kewarganegaraan mahasiswa.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-[#FAF8F5] border border-[#EFECE6]">
+            <div class="flex items-center gap-2 font-bold text-[#172B4D] mb-1.5">
+              <i class="fa-solid fa-door-open text-purple-600"></i> Jalur Masuk (8 Atribut)
+            </div>
+            <p class="text-slate-600 leading-relaxed text-[11px]">
+              Mode pendaftaran, urutan pilihan prodi, kualifikasi ijazah sebelumnya, nilai tes seleksi masuk, dan kelas reguler/malam.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200/80 text-xs text-amber-900 flex items-start gap-3">
+          <i class="fa-solid fa-circle-info text-amber-600 text-sm mt-0.5"></i>
+          <div>
+            <strong>Catatan Verifikasi Data:</strong> Dataset ini merupakan data nyata dari institusi pendidikan tinggi di Portugal (Instituto Politecnico de Portalegre) yang dipublikasikan secara resmi di UCI Machine Learning Repository.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Data Table Sample Preview -->
+    <div class="bg-white rounded-3xl border border-[#EFECE6] shadow-xs overflow-hidden">
+      <div class="p-5 sm:p-6 border-b border-slate-100 flex items-center justify-between">
+        <div>
+          <h3 class="font-bold text-base text-[#172B4D]">Pratinjau 15 Baris Data Sampel</h3>
+          <p class="text-xs text-slate-500 mt-0.5">Menampilkan atribut utama beserta kolom target status mahasiswa.</p>
+        </div>
+        <span class="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-600">
+          Total 4.424 Baris
+        </span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200 text-[10px] uppercase">
+              <th class="p-3">No</th>
+              {% for col in columns %}
+              <th class="p-3 whitespace-nowrap {% if col == 'Target' %}bg-[#E3FCEF] text-[#006644]{% endif %}">{{ col }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-slate-700">
+            {% for row in sample_rows %}
+            <tr class="hover:bg-slate-50/80 transition-colors">
+              <td class="p-3 font-mono text-slate-400">{{ loop.index }}</td>
+              {% for col in columns %}
+              <td class="p-3 whitespace-nowrap">
+                {% if col == 'Target' %}
+                  {% if row[col] == 'Graduate' %}
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#E3FCEF] text-[#006644]">Lulus</span>
+                  {% elif row[col] == 'Dropout' %}
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800">Dropout</span>
+                  {% else %}
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">Aktif</span>
+                  {% endif %}
+                {% else %}
+                  {{ row[col] }}
+                {% endif %}
+              </td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const distData = {{ distribution | tojson }};
+  const ctx = document.getElementById('datasetDonutChart');
+  if (ctx) {
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Lulus (Graduate)', 'Dropout (Putus)', 'Aktif (Enrolled)'],
+        datasets: [{
+          data: [distData['Graduate'] || 0, distData['Dropout'] || 0, distData['Enrolled'] || 0],
+          backgroundColor: ['#00875A', '#E11D48', '#D97706'],
+          borderWidth: 3,
+          borderColor: '#FFFFFF',
+          hoverOffset: 6
+        }]
+      },
+      options: {
+        cutout: '72%',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: ctx => ` ${ctx.label}: ${ctx.parsed} mhs`
+            }
+          }
+        }
+      }
+    });
+  }
+</script>
+{% endblock %}

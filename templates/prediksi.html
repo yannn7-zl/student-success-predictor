@@ -1,0 +1,471 @@
+{% extends "base.html" %}
+{% block title %}Prediksi Kelulusan Mahasiswa — GraduAItion{% endblock %}
+
+{% block content %}
+<div class="py-8 sm:py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- ============================================================
+         PRESET BAR (PERSIS GAMBAR 1 DOSEN)
+         ============================================================ -->
+    <div class="flex flex-wrap items-center gap-3 mb-8">
+      <span class="text-xs font-bold uppercase tracking-wider text-slate-400">PRESET CEPAT:</span>
+      
+      <!-- Profil Emas -->
+      <button type="button" onclick="selectPreset('gold')" id="btn-preset-gold" class="px-4 py-2 rounded-full border border-[#ABF5D1] bg-[#E3FCEF] text-[#006644] text-xs font-bold flex items-center gap-2 hover:bg-[#c2f7db] transition-all">
+        <i class="fa-solid fa-shield-halved text-emerald-600"></i> Profil Emas
+      </button>
+
+      <!-- Profil Berisiko -->
+      <button type="button" onclick="selectPreset('risk')" id="btn-preset-risk" class="px-4 py-2 rounded-full border border-rose-200 bg-rose-50 text-rose-700 text-xs font-bold flex items-center gap-2 hover:bg-rose-100 transition-all">
+        <i class="fa-solid fa-triangle-exclamation text-rose-600"></i> Profil Berisiko
+      </button>
+
+      <!-- Profil Tengah -->
+      <button type="button" onclick="selectPreset('mid')" id="btn-preset-mid" class="px-4 py-2 rounded-full border border-amber-200 bg-amber-50 text-amber-800 text-xs font-bold flex items-center gap-2 hover:bg-amber-100 transition-all ring-2 ring-amber-300">
+        <i class="fa-solid fa-book-open text-amber-600"></i> Profil Tengah
+      </button>
+
+      <!-- Acak -->
+      <button type="button" onclick="selectPreset('random')" id="btn-preset-random" class="px-4 py-2 rounded-full border border-slate-200 bg-white text-slate-700 text-xs font-bold flex items-center gap-2 hover:bg-slate-50 transition-all">
+        <i class="fa-solid fa-dice text-slate-400"></i> Acak
+      </button>
+    </div>
+
+    <!-- ============================================================
+         MAIN 2-COLUMN LAYOUT: KIRI SLIDER, KANAN HASIL
+         ============================================================ -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- KOLOM KIRI: INPUT SLIDER (SANGAT MUDAH UNTUK ORANG AWAM) -->
+      <div class="lg:col-span-7 space-y-6">
+        
+        <!-- CARD 1: AKADEMIK — SEMESTER 1 -->
+        <div class="bg-white p-6 rounded-3xl border border-[#EFECE6] shadow-xs">
+          <div class="flex items-center justify-between mb-5">
+            <h3 class="font-bold text-base text-[#172B4D]">Akademik &mdash; Semester 1</h3>
+            <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600">SMT 1</span>
+          </div>
+
+          <div class="space-y-5">
+            <!-- Mata Kuliah Lulus Smt 1 -->
+            <div>
+              <div class="flex items-center justify-between text-xs font-semibold mb-2">
+                <span class="text-slate-700">Mata Kuliah Lulus</span>
+                <span id="disp_s1_app" class="font-bold text-[#172B4D] bg-slate-100 px-2.5 py-1 rounded-lg">5 dari yang diambil</span>
+              </div>
+              <input type="range" id="input_s1_app" min="0" max="10" step="1" value="5" oninput="updateSliders(); triggerLivePrediction();" class="slider-green w-full">
+            </div>
+
+            <!-- Mata Kuliah Diambil Smt 1 -->
+            <div>
+              <div class="flex items-center justify-between text-xs font-semibold mb-2">
+                <span class="text-slate-700">Mata Kuliah Diambil</span>
+                <span id="disp_s1_enr" class="font-bold text-[#172B4D] bg-slate-100 px-2.5 py-1 rounded-lg">6</span>
+              </div>
+              <input type="range" id="input_s1_enr" min="1" max="12" step="1" value="6" oninput="updateSliders(); triggerLivePrediction();" class="slider-green w-full">
+            </div>
+
+            <!-- Rata-rata Nilai Smt 1 -->
+            <div>
+              <div class="flex items-center justify-between text-xs font-semibold mb-2">
+                <span class="text-slate-700">Rata-rata Nilai (Skala 0 - 20)</span>
+                <span id="disp_s1_grd" class="font-bold text-[#172B4D] bg-slate-100 px-2.5 py-1 rounded-lg">12.5</span>
+              </div>
+              <input type="range" id="input_s1_grd" min="0.0" max="20.0" step="0.5" value="12.5" oninput="updateSliders(); triggerLivePrediction();" class="slider-green w-full">
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 2: AKADEMIK — SEMESTER 2 -->
+        <div class="bg-white p-6 rounded-3xl border border-[#EFECE6] shadow-xs">
+          <div class="flex items-center justify-between mb-5">
+            <h3 class="font-bold text-base text-[#172B4D]">Akademik &mdash; Semester 2</h3>
+            <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600">SMT 2</span>
+          </div>
+
+          <div class="space-y-5">
+            <!-- Mata Kuliah Lulus Smt 2 -->
+            <div>
+              <div class="flex items-center justify-between text-xs font-semibold mb-2">
+                <span class="text-slate-700">Mata Kuliah Lulus</span>
+                <span id="disp_s2_app" class="font-bold text-[#172B4D] bg-slate-100 px-2.5 py-1 rounded-lg">5 dari yang diambil</span>
+              </div>
+              <input type="range" id="input_s2_app" min="0" max="10" step="1" value="5" oninput="updateSliders(); triggerLivePrediction();" class="slider-green w-full">
+            </div>
+
+            <!-- Mata Kuliah Diambil Smt 2 -->
+            <div>
+              <div class="flex items-center justify-between text-xs font-semibold mb-2">
+                <span class="text-slate-700">Mata Kuliah Diambil</span>
+                <span id="disp_s2_enr" class="font-bold text-[#172B4D] bg-slate-100 px-2.5 py-1 rounded-lg">6</span>
+              </div>
+              <input type="range" id="input_s2_enr" min="1" max="12" step="1" value="6" oninput="updateSliders(); triggerLivePrediction();" class="slider-green w-full">
+            </div>
+
+            <!-- Rata-rata Nilai Smt 2 -->
+            <div>
+              <div class="flex items-center justify-between text-xs font-semibold mb-2">
+                <span class="text-slate-700">Rata-rata Nilai (Skala 0 - 20)</span>
+                <span id="disp_s2_grd" class="font-bold text-[#172B4D] bg-slate-100 px-2.5 py-1 rounded-lg">12.5</span>
+              </div>
+              <input type="range" id="input_s2_grd" min="0.0" max="20.0" step="0.5" value="12.5" oninput="updateSliders(); triggerLivePrediction();" class="slider-green w-full">
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 3: FINANSIAL & LATAR BELAKANG (TOGGLE SIMPEL) -->
+        <div class="bg-white p-6 rounded-3xl border border-[#EFECE6] shadow-xs">
+          <h3 class="font-bold text-base text-[#172B4D] mb-4">Profil Finansial & Pendaftaran</h3>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            <!-- SPP -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <label class="text-xs font-bold text-slate-700 block mb-2">Status Pembayaran SPP</label>
+              <select id="input_tuition" onchange="triggerLivePrediction()" class="w-full text-xs font-semibold p-2.5 rounded-xl border border-slate-300 bg-white">
+                <option value="1">Lunas / Lancar</option>
+                <option value="0">Ada Tunggakan</option>
+              </select>
+            </div>
+
+            <!-- Beasiswa -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <label class="text-xs font-bold text-slate-700 block mb-2">Penerima Beasiswa</label>
+              <select id="input_scholarship" onchange="triggerLivePrediction()" class="w-full text-xs font-semibold p-2.5 rounded-xl border border-slate-300 bg-white">
+                <option value="0">Bukan Penerima Beasiswa</option>
+                <option value="1">Menerima Beasiswa</option>
+              </select>
+            </div>
+
+            <!-- Usia Masuk -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="flex justify-between text-xs font-bold text-slate-700 mb-2">
+                <span>Usia Pendaftaran</span>
+                <span id="disp_age" class="text-[#00875A]">20 tahun</span>
+              </div>
+              <input type="range" id="input_age" min="17" max="45" step="1" value="20" oninput="document.getElementById('disp_age').innerText = this.value + ' tahun'; triggerLivePrediction();" class="slider-green w-full">
+            </div>
+
+            <!-- Nilai Masuk -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="flex justify-between text-xs font-bold text-slate-700 mb-2">
+                <span>Nilai Seleksi Masuk</span>
+                <span id="disp_adm" class="text-[#00875A]">128</span>
+              </div>
+              <input type="range" id="input_adm" min="90" max="200" step="1" value="128" oninput="document.getElementById('disp_adm').innerText = this.value; triggerLivePrediction();" class="slider-green w-full">
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- KOLOM KANAN: HASIL PREDIKSI MODEL (PERSIS GAMBAR 1 DOSEN) -->
+      <div class="lg:col-span-5 space-y-6 lg:sticky lg:top-24">
+        
+        <!-- CARD PREDIKSI UTAMA -->
+        <div class="bg-white p-7 rounded-3xl border border-[#EFECE6] shadow-md relative overflow-hidden">
+          
+          <div class="flex items-center justify-between text-xs font-bold text-slate-400 mb-5">
+            <span>HASIL PREDIKSI MODEL</span>
+            <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600">Random Forest</span>
+          </div>
+
+          <!-- Big Badge Status -->
+          <div class="flex items-center gap-4 mb-6">
+            <div id="res_icon_box" class="w-14 h-14 rounded-2xl bg-[#00875A] text-white flex items-center justify-center text-2xl shadow-sm transition-colors">
+              <i id="res_icon" class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <div>
+              <h2 id="res_label" class="text-3xl font-bold tracking-tight text-[#00875A]">Lulus</h2>
+              <p id="res_sub" class="text-xs text-slate-500 font-medium">
+                keyakinan 59,8% &bull; Random Forest &mdash; 300 pohon
+              </p>
+            </div>
+          </div>
+
+          <!-- Probabilitas Bar Lines -->
+          <div class="space-y-3.5 mb-6 text-xs">
+            
+            <!-- Putus Studi -->
+            <div>
+              <div class="flex justify-between text-slate-600 mb-1 font-semibold">
+                <span>Putus Studi</span>
+                <span id="prob_val_dropout" class="font-bold text-slate-800">14.9%</span>
+              </div>
+              <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                <div id="prob_bar_dropout" class="bg-rose-500 h-full rounded-full transition-all duration-500" style="width: 14.9%"></div>
+              </div>
+            </div>
+
+            <!-- Aktif -->
+            <div>
+              <div class="flex justify-between text-slate-600 mb-1 font-semibold">
+                <span>Aktif</span>
+                <span id="prob_val_enrolled" class="font-bold text-slate-800">25.3%</span>
+              </div>
+              <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                <div id="prob_bar_enrolled" class="bg-amber-500 h-full rounded-full transition-all duration-500" style="width: 25.3%"></div>
+              </div>
+            </div>
+
+            <!-- Lulus -->
+            <div>
+              <div class="flex justify-between text-slate-600 mb-1 font-semibold">
+                <span>Lulus</span>
+                <span id="prob_val_graduate" class="font-bold text-slate-800">59.8%</span>
+              </div>
+              <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                <div id="prob_bar_graduate" class="bg-[#00875A] h-full rounded-full transition-all duration-500" style="width: 59.8%"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Human Readable Explanation Box -->
+          <div class="p-4 rounded-2xl bg-[#FAF8F5] border border-[#EFECE6] text-xs leading-relaxed text-slate-600 mb-6" id="res_explanation">
+            Model memprediksi mahasiswa ini LULUS dengan keyakinan 59%. Kombinasi performansi akademik menunjukkan lintasan kelulusan yang kokoh.
+          </div>
+
+          <!-- Row: Skor Risiko & Faktor Penentu (Persis Gambar Dosen) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-5 border-t border-slate-100">
+            
+            <!-- Skor Risiko -->
+            <div class="p-4 rounded-2xl bg-white border border-[#EFECE6]">
+              <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">SKOR RISIKO TIDAK LULUS</p>
+              <div class="flex items-baseline gap-2">
+                <span id="res_risk_num" class="text-2xl font-bold text-amber-500">26.3%</span>
+                <span id="res_risk_tag" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700">Sedang</span>
+              </div>
+              <div class="w-full bg-slate-100 h-1.5 rounded-full mt-2 overflow-hidden">
+                <div id="res_risk_bar" class="h-full bg-amber-500 rounded-full transition-all duration-500" style="width: 26.3%"></div>
+              </div>
+            </div>
+
+            <!-- Faktor Paling Berpengaruh -->
+            <div class="p-4 rounded-2xl bg-white border border-[#EFECE6]">
+              <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">FAKTOR PENENTU</p>
+              <div class="space-y-1.5 text-[11px]" id="res_factors">
+                <div class="flex justify-between">
+                  <span class="truncate pr-1 text-slate-600">1. MK Lulus Smt 2</span>
+                  <span class="font-bold text-[#00875A]">39%</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="truncate pr-1 text-slate-600">2. MK Lulus Smt 1</span>
+                  <span class="font-bold text-[#00875A]">24%</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="truncate pr-1 text-slate-600">3. Nilai Smt 2</span>
+                  <span class="font-bold text-[#00875A]">18%</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Presets Data dari Python Backend
+  const presets = {{ presets | tojson }};
+
+  function updateSliders() {
+    // Smt 1
+    const s1_app = document.getElementById('input_s1_app').value;
+    const s1_enr = document.getElementById('input_s1_enr').value;
+    const s1_grd = document.getElementById('input_s1_grd').value;
+    document.getElementById('disp_s1_app').innerText = `${s1_app} dari yang diambil`;
+    document.getElementById('disp_s1_enr').innerText = s1_enr;
+    document.getElementById('disp_s1_grd').innerText = s1_grd;
+
+    // Smt 2
+    const s2_app = document.getElementById('input_s2_app').value;
+    const s2_enr = document.getElementById('input_s2_enr').value;
+    const s2_grd = document.getElementById('input_s2_grd').value;
+    document.getElementById('disp_s2_app').innerText = `${s2_app} dari yang diambil`;
+    document.getElementById('disp_s2_enr').innerText = s2_enr;
+    document.getElementById('disp_s2_grd').innerText = s2_grd;
+  }
+
+  // Live AJAX prediction trigger
+  let debounceTimeout = null;
+  function triggerLivePrediction() {
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(() => {
+      fetchPrediction();
+    }, 150);
+  }
+
+  function fetchPrediction() {
+    const payload = {
+      "Curricular units 1st sem (approved)": parseFloat(document.getElementById('input_s1_app').value),
+      "Curricular units 1st sem (enrolled)": parseFloat(document.getElementById('input_s1_enr').value),
+      "Curricular units 1st sem (grade)": parseFloat(document.getElementById('input_s1_grd').value),
+      "Curricular units 2nd sem (approved)": parseFloat(document.getElementById('input_s2_app').value),
+      "Curricular units 2nd sem (enrolled)": parseFloat(document.getElementById('input_s2_enr').value),
+      "Curricular units 2nd sem (grade)": parseFloat(document.getElementById('input_s2_grd').value),
+      "Tuition fees up to date": parseFloat(document.getElementById('input_tuition').value),
+      "Scholarship holder": parseFloat(document.getElementById('input_scholarship').value),
+      "Age at enrollment": parseFloat(document.getElementById('input_age').value),
+      "Admission grade": parseFloat(document.getElementById('input_adm').value)
+    };
+
+    fetch('/api/predict', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then(data => {
+      renderPrediction(data);
+    })
+    .catch(err => console.error('Error fetching prediction:', err));
+  }
+
+  function renderPrediction(data) {
+    const iconBox = document.getElementById('res_icon_box');
+    const icon = document.getElementById('res_icon');
+    const label = document.getElementById('res_label');
+    const sub = document.getElementById('res_sub');
+
+    label.innerText = data.label;
+    sub.innerText = `keyakinan ${data.confidence}% • ${data.model_info}`;
+
+    if (data.prediction === 'Graduate') {
+      iconBox.className = 'w-14 h-14 rounded-2xl bg-[#00875A] text-white flex items-center justify-center text-2xl shadow-sm transition-colors';
+      icon.className = 'fa-solid fa-graduation-cap';
+      label.className = 'text-3xl font-bold tracking-tight text-[#00875A]';
+    } else if (data.prediction === 'Dropout') {
+      iconBox.className = 'w-14 h-14 rounded-2xl bg-rose-500 text-white flex items-center justify-center text-2xl shadow-sm transition-colors';
+      icon.className = 'fa-solid fa-triangle-exclamation';
+      label.className = 'text-3xl font-bold tracking-tight text-rose-600';
+    } else {
+      iconBox.className = 'w-14 h-14 rounded-2xl bg-amber-500 text-white flex items-center justify-center text-2xl shadow-sm transition-colors';
+      icon.className = 'fa-solid fa-clock-rotate-left';
+      label.className = 'text-3xl font-bold tracking-tight text-amber-600';
+    }
+
+    // Probabilities bars
+    data.probabilities.forEach(item => {
+      const bar = document.getElementById(`prob_bar_${item.key.toLowerCase()}`);
+      const val = document.getElementById(`prob_val_${item.key.toLowerCase()}`);
+      if (bar && val) {
+        bar.style.width = item.pct + '%';
+        val.innerText = item.pct + '%';
+      }
+    });
+
+    // Explanation
+    document.getElementById('res_explanation').innerText = data.explanation;
+
+    // Risk score
+    const riskNum = document.getElementById('res_risk_num');
+    const riskTag = document.getElementById('res_risk_tag');
+    const riskBar = document.getElementById('res_risk_bar');
+    riskNum.innerText = data.risk_score + '%';
+    riskBar.style.width = data.risk_score + '%';
+
+    if (data.risk_score < 30) {
+      riskNum.className = 'text-2xl font-bold text-[#00875A]';
+      riskTag.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#E3FCEF] text-[#006644]';
+      riskTag.innerText = 'Rendah';
+      riskBar.className = 'h-full bg-[#00875A] rounded-full transition-all duration-500';
+    } else if (data.risk_score < 60) {
+      riskNum.className = 'text-2xl font-bold text-amber-500';
+      riskTag.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700';
+      riskTag.innerText = 'Sedang';
+      riskBar.className = 'h-full bg-amber-500 rounded-full transition-all duration-500';
+    } else {
+      riskNum.className = 'text-2xl font-bold text-rose-500';
+      riskTag.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-50 text-rose-700';
+      riskTag.innerText = 'Tinggi';
+      riskBar.className = 'h-full bg-rose-500 rounded-full transition-all duration-500';
+    }
+
+    // Factors list
+    const factorsContainer = document.getElementById('res_factors');
+    factorsContainer.innerHTML = '';
+    data.factors.forEach((f, idx) => {
+      factorsContainer.innerHTML += `
+        <div class="flex justify-between">
+          <span class="truncate pr-1 text-slate-600">${idx+1}. ${f.name}</span>
+          <span class="font-bold text-[#00875A]">${f.impact}</span>
+        </div>
+      `;
+    });
+  }
+
+  // Presets selector
+  function selectPreset(type) {
+    // Reset ring buttons
+    document.querySelectorAll('[id^="btn-preset-"]').forEach(btn => btn.classList.remove('ring-2', 'ring-brand'));
+    const activeBtn = document.getElementById(`btn-preset-${type}`);
+    if (activeBtn) activeBtn.classList.add('ring-2', 'ring-emerald-500');
+
+    if (type === 'random') {
+      fetch('/api/preset/random')
+      .then(res => res.json())
+      .then(resData => {
+        applyFormValues(resData.data);
+        renderPrediction(resData.prediction);
+      });
+      return;
+    }
+
+    const presetData = presets[type];
+    if (presetData) {
+      applyFormValues(presetData);
+      triggerLivePrediction();
+    }
+  }
+
+  function applyFormValues(data) {
+    if (data["Curricular units 1st sem (approved)"] !== undefined)
+      document.getElementById('input_s1_app').value = Math.min(10, Math.round(data["Curricular units 1st sem (approved)"]));
+    if (data["Curricular units 1st sem (enrolled)"] !== undefined)
+      document.getElementById('input_s1_enr').value = Math.min(12, Math.max(1, Math.round(data["Curricular units 1st sem (enrolled)"])));
+    if (data["Curricular units 1st sem (grade)"] !== undefined)
+      document.getElementById('input_s1_grd').value = parseFloat(data["Curricular units 1st sem (grade)"]).toFixed(1);
+
+    if (data["Curricular units 2nd sem (approved)"] !== undefined)
+      document.getElementById('input_s2_app').value = Math.min(10, Math.round(data["Curricular units 2nd sem (approved)"]));
+    if (data["Curricular units 2nd sem (enrolled)"] !== undefined)
+      document.getElementById('input_s2_enr').value = Math.min(12, Math.max(1, Math.round(data["Curricular units 2nd sem (enrolled)"])));
+    if (data["Curricular units 2nd sem (grade)"] !== undefined)
+      document.getElementById('input_s2_grd').value = parseFloat(data["Curricular units 2nd sem (grade)"]).toFixed(1);
+
+    if (data["Tuition fees up to date"] !== undefined)
+      document.getElementById('input_tuition').value = data["Tuition fees up to date"] >= 1 ? "1" : "0";
+    if (data["Scholarship holder"] !== undefined)
+      document.getElementById('input_scholarship').value = data["Scholarship holder"] >= 1 ? "1" : "0";
+    if (data["Age at enrollment"] !== undefined) {
+      const age = Math.round(data["Age at enrollment"]);
+      document.getElementById('input_age').value = age;
+      document.getElementById('disp_age').innerText = age + ' tahun';
+    }
+    if (data["Admission grade"] !== undefined) {
+      const adm = Math.round(data["Admission grade"]);
+      document.getElementById('input_adm').value = adm;
+      document.getElementById('disp_adm').innerText = adm;
+    }
+
+    updateSliders();
+  }
+
+  // Run on start
+  document.addEventListener('DOMContentLoaded', () => {
+    updateSliders();
+    fetchPrediction();
+  });
+</script>
+{% endblock %}

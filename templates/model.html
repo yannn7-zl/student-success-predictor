@@ -1,0 +1,265 @@
+{% extends "base.html" %}
+{% block title %}Model Arena — 4 Algoritma Bertanding — GraduAItion{% endblock %}
+
+{% block content %}
+<div class="py-8 sm:py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    
+    <!-- Title & Coursera IBM Banner -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <div class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#00875A] mb-1">
+          <i class="fa-solid fa-trophy"></i> Supervised Machine Learning: Classification
+        </div>
+        <h1 class="font-serif text-3xl sm:text-4xl font-bold text-[#172B4D] tracking-tight">Model Arena (4 Algoritma Klasifikasi)</h1>
+        <p class="text-sm text-[#5E6C84] mt-1">
+          Berdasarkan materi IBM Machine Learning (Kursus 3): <strong>Random Forest vs Logistic Regression vs CART vs Naive Bayes</strong> diuji pada 885 data uji stratified.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <span class="px-3.5 py-1.5 rounded-full bg-[#E3FCEF] border border-[#ABF5D1] text-xs font-bold text-[#006644] flex items-center gap-1.5">
+          <i class="fa-solid fa-crown text-amber-500"></i> Juara 1: Random Forest (75.6%)
+        </span>
+      </div>
+    </div>
+
+    <!-- 4 LEADERBOARD CARDS -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      {% for key, m in models_arena.items() %}
+      <div class="bg-white p-5 rounded-3xl border border-[#EFECE6] shadow-xs relative overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow">
+        {% if key == 'rf' %}
+          <div class="absolute top-0 right-0 bg-[#00875A] text-white text-[9px] font-extrabold uppercase px-3 py-1 rounded-bl-xl">
+            Champion
+          </div>
+        {% endif %}
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">{{ m.badge }}</span>
+          <h3 class="font-serif text-xl font-bold text-[#172B4D] mb-1">{{ m.name }}</h3>
+          <p class="text-[11px] text-[#5E6C84] leading-relaxed mb-4">{{ m.desc }}</p>
+        </div>
+
+        <div class="pt-3 border-t border-slate-100 space-y-2 text-xs">
+          <div class="flex justify-between items-baseline">
+            <span class="text-slate-500">Akurasi Uji</span>
+            <span class="text-lg font-bold {% if key == 'rf' %}text-[#00875A]{% else %}text-slate-800{% endif %}">
+              {{ "%.1f" | format(m.accuracy * 100) }}%
+            </span>
+          </div>
+          <div class="flex justify-between text-[11px]">
+            <span class="text-slate-400">Balanced Acc</span>
+            <span class="font-semibold text-slate-700">{{ "%.1f" | format(m.balanced_accuracy * 100) }}%</span>
+          </div>
+          <div class="flex justify-between text-[11px]">
+            <span class="text-slate-400">5-Fold CV</span>
+            <span class="font-semibold text-slate-700">{{ "%.1f" | format(m.cv_accuracy_mean * 100) }}%</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- INTERACTIVE MODEL ARENA TAB SELECTOR -->
+    <div class="bg-white p-6 sm:p-8 rounded-3xl border border-[#EFECE6] shadow-xs space-y-6">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+        <div>
+          <h2 class="font-bold text-lg text-[#172B4D]">Inspeksi Detail Algoritma &amp; Confusion Matrix</h2>
+          <p class="text-xs text-slate-500">Pilih model di bawah untuk melihat rincian matriks konfusi dan metrik per kelasnya:</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 bg-[#FAF8F5] p-1.5 rounded-full border border-slate-200" id="modelSelector">
+          <button type="button" onclick="switchModel('rf')" id="tab-rf" class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#00875A] text-white shadow-xs transition-all">
+            Random Forest
+          </button>
+          <button type="button" onclick="switchModel('lr')" id="tab-lr" class="px-3.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">
+            Logistic Regression
+          </button>
+          <button type="button" onclick="switchModel('cart')" id="tab-cart" class="px-3.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">
+            CART (Decision Tree)
+          </button>
+          <button type="button" onclick="switchModel('nb')" id="tab-nb" class="px-3.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">
+            Naive Bayes
+          </button>
+        </div>
+      </div>
+
+      <!-- 2 Kolom: Matrix & Metrik Class -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Left: Matrix -->
+        <div class="lg:col-span-5 bg-[#FAF8F5] p-5 rounded-2xl border border-[#EFECE6]">
+          <div class="flex items-center justify-between mb-4">
+            <h4 class="font-bold text-xs uppercase tracking-wider text-slate-700" id="matrix_title">Confusion Matrix (Random Forest)</h4>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-200 text-slate-600">885 Uji</span>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 text-center text-xs font-bold mb-3" id="matrix_grid">
+            <!-- Diisi lewat Javascript switchModel -->
+          </div>
+
+          <div class="flex justify-between text-[10px] text-slate-400 px-1">
+            <span>Baris: Aktual</span>
+            <span>Kolom: Prediksi</span>
+          </div>
+        </div>
+
+        <!-- Right: Per-class metrics -->
+        <div class="lg:col-span-7 space-y-3" id="class_metrics_container">
+          <!-- Diisi lewat Javascript switchModel -->
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Feature Importance Bar Chart -->
+    <div class="bg-white p-6 sm:p-8 rounded-3xl border border-[#EFECE6] shadow-xs">
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="font-bold text-base text-[#172B4D]">12 Fitur Paling Berpengaruh (Gini Feature Importance)</h3>
+        <span class="text-xs font-bold text-[#00875A] bg-[#E3FCEF] px-3 py-1 rounded-full">Bobot Random Forest</span>
+      </div>
+      <p class="text-xs text-slate-500 mb-6">Variabel terpenting yang menentukan apakah seorang mahasiswa akan lulus atau putus kuliah.</p>
+
+      <div class="h-[380px] w-full">
+        <canvas id="modelImportanceChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const arenaData = {{ models_arena | tojson }};
+  const featureData = {{ feature_importance | tojson }};
+
+  function switchModel(modelKey) {
+    // 1. Update active tab
+    ['rf', 'lr', 'cart', 'nb'].forEach(k => {
+      const btn = document.getElementById(`tab-${k}`);
+      if (k === modelKey) {
+        btn.className = 'px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#00875A] text-white shadow-xs transition-all';
+      } else {
+        btn.className = 'px-3.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all';
+      }
+    });
+
+    const m = arenaData[modelKey];
+    if (!m) return;
+
+    // 2. Update matrix title & grid
+    document.getElementById('matrix_title').innerText = `Confusion Matrix (${m.name})`;
+    const cm = m.confusion_matrix;
+    const grid = document.getElementById('matrix_grid');
+    grid.innerHTML = `
+      <div class="p-3 rounded-xl bg-[#00875A] text-white"><div class="text-base font-extrabold">${cm[0][0]}</div><div class="text-[9px] opacity-80">True Dropout</div></div>
+      <div class="p-3 rounded-xl bg-white text-slate-600"><div class="text-base font-extrabold">${cm[0][1]}</div><div class="text-[9px] opacity-70">Aktif</div></div>
+      <div class="p-3 rounded-xl bg-white text-slate-600"><div class="text-base font-extrabold">${cm[0][2]}</div><div class="text-[9px] opacity-70">Lulus</div></div>
+
+      <div class="p-3 rounded-xl bg-white text-slate-600"><div class="text-base font-extrabold">${cm[1][0]}</div><div class="text-[9px] opacity-70">Dropout</div></div>
+      <div class="p-3 rounded-xl bg-amber-400 text-white"><div class="text-base font-extrabold">${cm[1][1]}</div><div class="text-[9px] opacity-80">True Aktif</div></div>
+      <div class="p-3 rounded-xl bg-white text-slate-600"><div class="text-base font-extrabold">${cm[1][2]}</div><div class="text-[9px] opacity-70">Lulus</div></div>
+
+      <div class="p-3 rounded-xl bg-white text-slate-600"><div class="text-base font-extrabold">${cm[2][0]}</div><div class="text-[9px] opacity-70">Dropout</div></div>
+      <div class="p-3 rounded-xl bg-white text-slate-600"><div class="text-base font-extrabold">${cm[2][1]}</div><div class="text-[9px] opacity-70">Aktif</div></div>
+      <div class="p-3 rounded-xl bg-[#00875A] text-white"><div class="text-base font-extrabold">${cm[2][2]}</div><div class="text-[9px] opacity-80">True Lulus</div></div>
+    `;
+
+    // 3. Update class metrics
+    const rep = m.classification_report;
+    const container = document.getElementById('class_metrics_container');
+    container.innerHTML = `
+      <div class="p-4 rounded-2xl bg-white border border-[#EFECE6] shadow-xs">
+        <div class="flex items-center justify-between text-xs font-bold text-[#00875A] mb-2">
+          <span><i class="fa-solid fa-graduation-cap mr-1"></i> Mahasiswa Lulus (Graduate)</span>
+          <span class="text-slate-400 font-semibold">${Math.round(rep['Graduate']['support'])} data</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2 text-center text-xs">
+          <div class="p-2 bg-slate-50 rounded-xl"><span class="text-[10px] text-slate-400 font-bold block">PRECISION</span><span class="font-bold text-slate-800">${(rep['Graduate']['precision']*100).toFixed(1)}%</span></div>
+          <div class="p-2 bg-slate-50 rounded-xl"><span class="text-[10px] text-slate-400 font-bold block">RECALL</span><span class="font-bold text-slate-800">${(rep['Graduate']['recall']*100).toFixed(1)}%</span></div>
+          <div class="p-2 bg-slate-50 rounded-xl"><span class="text-[10px] text-slate-400 font-bold block">F1-SCORE</span><span class="font-bold text-[#00875A]">${(rep['Graduate']['f1-score']*100).toFixed(1)}%</span></div>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-white border border-[#EFECE6] shadow-xs">
+        <div class="flex items-center justify-between text-xs font-bold text-rose-600 mb-2">
+          <span><i class="fa-solid fa-triangle-exclamation mr-1"></i> Putus Studi (Dropout)</span>
+          <span class="text-slate-400 font-semibold">${Math.round(rep['Dropout']['support'])} data</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2 text-center text-xs">
+          <div class="p-2 bg-slate-50 rounded-xl"><span class="text-[10px] text-slate-400 font-bold block">PRECISION</span><span class="font-bold text-slate-800">${(rep['Dropout']['precision']*100).toFixed(1)}%</span></div>
+          <div class="p-2 bg-slate-50 rounded-xl"><span class="text-[10px] text-slate-400 font-bold block">RECALL</span><span class="font-bold text-slate-800">${(rep['Dropout']['recall']*100).toFixed(1)}%</span></div>
+          <div class="p-2 bg-slate-50 rounded-xl"><span class="text-[10px] text-slate-400 font-bold block">F1-SCORE</span><span class="font-bold text-rose-600">${(rep['Dropout']['f1-score']*100).toFixed(1)}%</span></div>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-white border border-[#EFECE6] shadow-xs">
+        <div class="flex items-center justify-between text-xs font-bold text-amber-600 mb-2">
+          <span><i class="fa-solid fa-clock-rotate-left mr-1"></i> Masih Aktif (Enrolled)</span>
+          <span class="text-slate-400 font-semibold">${Math.round(rep['Enrolled']['support'])} data</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2 text-center text-xs">
+          <div class="p-2 bg-slate-50 rounded-xl"><span class="text-[10px] text-slate-400 font-bold block">PRECISION</span><span class="font-bold text-slate-800">${(rep['Enrolled']['precision']*100).toFixed(1)}%</span></div>
+          <div class="p-2 bg-slate-50 rounded-xl"><span class="text-[10px] text-slate-400 font-bold block">RECALL</span><span class="font-bold text-slate-800">${(rep['Enrolled']['recall']*100).toFixed(1)}%</span></div>
+          <div class="p-2 bg-slate-50 rounded-xl"><span class="text-[10px] text-slate-400 font-bold block">F1-SCORE</span><span class="font-bold text-amber-600">${(rep['Enrolled']['f1-score']*100).toFixed(1)}%</span></div>
+        </div>
+      </div>
+    `;
+  }
+
+  // Feature Importance Chart
+  const ctx = document.getElementById('modelImportanceChart');
+  if (ctx) {
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: featureData.map(item => item.name),
+        datasets: [{
+          data: featureData.map(item => item.importance),
+          backgroundColor: '#00875A',
+          hoverBackgroundColor: '#006644',
+          borderRadius: 6,
+          barThickness: 16
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: ctx => ` Bobot: ${ctx.parsed.x}%`
+            }
+          }
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            grid: { color: '#F1F5F9' },
+            ticks: {
+              callback: val => val + '%',
+              font: { family: 'Plus Jakarta Sans', size: 11 }
+            }
+          },
+          y: {
+            grid: { display: false },
+            ticks: {
+              font: { family: 'Plus Jakarta Sans', size: 11, weight: '500' },
+              color: '#334155'
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // Inisialisasi awal pada tab Random Forest
+  document.addEventListener('DOMContentLoaded', () => {
+    switchModel('rf');
+  });
+</script>
+{% endblock %}

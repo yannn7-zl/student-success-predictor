@@ -1,0 +1,27 @@
+# Virtual environment
+venv/
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+
+# Model (too large for git)
+models/student_model.joblib
+
+# Predictions output
+predictions.csv
+
+# OS
+.DS_Store
+Thumbs.db

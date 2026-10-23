@@ -1,0 +1,360 @@
+{% extends "base.html" %}
+{% block title %}GraduAItion — Memprediksi Kelulusan Mahasiswa dengan Kecerdasan Data{% endblock %}
+
+{% block content %}
+<div class="py-8 sm:py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+
+    <!-- ============================================================
+         1. TOP PIPELINE BAR (PERSIS FOTO DOSEN GAMBAR 2)
+         ============================================================ -->
+    <div class="bg-white p-3 sm:p-4 rounded-3xl border border-[#EFECE6] shadow-xs overflow-x-auto">
+      <div class="flex items-center justify-between min-w-[700px] text-xs">
+        
+        <!-- Step 1: Dataset UCI -->
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-[#E3FCEF] text-[#00875A] flex items-center justify-center text-base shadow-xs">
+            <i class="fa-solid fa-database"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-[#172B4D]">Dataset UCI</h4>
+            <p class="text-[11px] text-[#5E6C84]">4.424 baris &bull; 36 fitur &bull; 3 kelas</p>
+          </div>
+        </div>
+
+        <i class="fa-solid fa-arrow-right text-slate-300"></i>
+
+        <!-- Step 2: Engine ML -->
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-base shadow-xs">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-[#172B4D]">Engine ML (4 Algoritma)</h4>
+            <p class="text-[11px] text-[#5E6C84]">RF &bull; LR &bull; CART &bull; Naive Bayes</p>
+          </div>
+        </div>
+
+        <i class="fa-solid fa-arrow-right text-slate-300"></i>
+
+        <!-- Step 3: REST API -->
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-[#00875A] flex items-center justify-center text-base shadow-xs">
+            <i class="fa-solid fa-server"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-[#172B4D]">REST API</h4>
+            <p class="text-[11px] text-[#5E6C84]">Flask Backend &bull; JSON Real-time</p>
+          </div>
+        </div>
+
+        <i class="fa-solid fa-arrow-right text-slate-300"></i>
+
+        <!-- Step 4: LLM / AI Insight -->
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-base shadow-xs">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-[#172B4D]">LLM Insight</h4>
+            <p class="text-[11px] text-[#5E6C84]">Penjelasan &bull; Narasi Mahasiswa</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ============================================================
+         2. HERO SECTION DENGAN TIPOGRAFI SERIF & INTERACTIVE VISUAL
+         ============================================================ -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+      
+      <!-- Kolom Kiri: Teks Hero -->
+      <div class="lg:col-span-6 space-y-6">
+        
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="px-3 py-1 text-xs font-semibold rounded-full bg-[#E3FCEF] text-[#006644] border border-[#ABF5D1] flex items-center gap-1.5">
+            <i class="fa-solid fa-graduation-cap text-[10px]"></i> IBM Machine Learning: Classification
+          </span>
+          <span class="px-3 py-1 text-xs font-semibold rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+            Coursera UDINUS
+          </span>
+        </div>
+
+        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-[#172B4D] leading-[1.12] tracking-tight">
+          Memprediksi <span class="text-[#00875A]">Kelulusan</span> <br>
+          Mahasiswa dengan <br>
+          <span class="text-[#00875A] italic">Kecerdasan Data</span>
+        </h1>
+
+        <p class="text-base text-[#5E6C84] leading-relaxed max-w-xl">
+          Aplikasi penambangan data end-to-end: dataset publik <strong>UCI Machine Learning</strong> berisi <strong>4.424 mahasiswa</strong> dan <strong>36 fitur akademik</strong>, diproses engine machine learning dengan 4 algoritma klasifikasi (Random Forest, Logistic Regression, CART, dan Naive Bayes) dilengkapi analisis interaktif dan asisten siap menjelaskan setiap angka.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-3 pt-2">
+          <a href="{{ url_for('prediksi_page') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#00875A] hover:bg-[#006644] text-white font-semibold text-sm shadow-sm transition-all hover:scale-[1.02]">
+            <i class="fa-solid fa-gauge-high"></i> Coba Prediksi Live &rarr;
+          </a>
+          <a href="{{ url_for('model_page') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white hover:bg-slate-50 text-[#172B4D] font-semibold text-sm border border-[#DFE1E6] shadow-xs transition-all">
+            <i class="fa-solid fa-trophy text-amber-500"></i> Lihat Model Arena
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Kolom Kanan: Interactive Visual Showcase -->
+      <div class="lg:col-span-6 relative">
+        <div class="bg-gradient-to-br from-white to-slate-50/70 p-6 sm:p-7 rounded-3xl border border-[#EFECE6] shadow-xl relative">
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            <!-- Card Prediksi Model -->
+            <div class="bg-white p-5 rounded-2xl border border-[#EFECE6] shadow-xs">
+              <div class="flex items-center justify-between text-xs font-bold text-slate-400 mb-1">
+                <span>PREDIKSI MODEL</span>
+                <div class="w-6 h-6 rounded-full bg-[#E3FCEF] text-[#00875A] flex items-center justify-center text-[10px]">
+                  <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+              </div>
+              <div class="flex items-baseline gap-2 mb-3">
+                <span class="text-3xl font-extrabold text-[#00875A]">76,6%</span>
+                <span class="text-xs font-semibold text-slate-500">keyakinan LULUS</span>
+              </div>
+              
+              <div class="space-y-1.5 text-[11px]">
+                <div class="flex justify-between text-slate-500"><span>Lulus</span><span class="font-bold text-[#00875A]">78%</span></div>
+                <div class="w-full bg-slate-100 h-1.5 rounded-full"><div class="bg-[#00875A] h-1.5 rounded-full" style="width: 78%"></div></div>
+                <div class="flex justify-between text-slate-500 pt-1"><span>Aktif</span><span class="font-bold text-amber-500">14%</span></div>
+                <div class="w-full bg-slate-100 h-1.5 rounded-full"><div class="bg-amber-500 h-1.5 rounded-full" style="width: 14%"></div></div>
+                <div class="flex justify-between text-slate-500 pt-1"><span>Putus</span><span class="font-bold text-rose-500">8%</span></div>
+                <div class="w-full bg-slate-100 h-1.5 rounded-full"><div class="bg-rose-500 h-1.5 rounded-full" style="width: 8%"></div></div>
+              </div>
+            </div>
+
+            <!-- Card Faktor Penentu -->
+            <div class="bg-white p-5 rounded-2xl border border-[#EFECE6] shadow-xs flex flex-col justify-between">
+              <div>
+                <p class="text-xs font-bold text-slate-400 uppercase mb-3">FAKTOR PENENTU</p>
+                <div class="space-y-2 text-xs">
+                  <div class="flex items-center justify-between">
+                    <span class="flex items-center gap-1.5 text-slate-700">
+                      <span class="w-4 h-4 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold flex items-center justify-center">1</span>
+                      <span>MK Lulus Smt 2</span>
+                    </span>
+                    <span class="font-bold text-slate-800">19,5%</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="flex items-center gap-1.5 text-slate-700">
+                      <span class="w-4 h-4 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold flex items-center justify-center">2</span>
+                      <span>MK Lulus Smt 1</span>
+                    </span>
+                    <span class="font-bold text-slate-800">13,2%</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="flex items-center gap-1.5 text-slate-700">
+                      <span class="w-4 h-4 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold flex items-center justify-center">3</span>
+                      <span>Nilai Smt 2</span>
+                    </span>
+                    <span class="font-bold text-slate-800">10,8%</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="flex items-center gap-1.5 text-slate-700">
+                      <span class="w-4 h-4 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold flex items-center justify-center">4</span>
+                      <span>Nilai Masuk</span>
+                    </span>
+                    <span class="font-bold text-slate-800">6,4%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="pt-2 text-[10px] text-slate-400 flex items-center gap-1 border-t border-slate-100">
+                <i class="fa-solid fa-tree text-[#00875A]"></i> Random Forest Importance
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Card Confusion Matrix -->
+          <div class="mt-4 bg-white p-5 rounded-2xl border border-[#EFECE6] shadow-xs">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold text-slate-400 uppercase">CONFUSION MATRIX</span>
+              <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-[#E3FCEF] text-[#00875A]">
+                Random Forest
+              </span>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 text-center text-xs font-bold">
+              <div class="p-2.5 rounded-xl bg-[#00875A] text-white">
+                <div>{{ confusion_matrix[0][0] }}</div>
+                <div class="text-[9px] font-normal opacity-80">True Dropout</div>
+              </div>
+              <div class="p-2.5 rounded-xl bg-slate-100 text-slate-600">
+                <div>{{ confusion_matrix[0][1] }}</div>
+                <div class="text-[9px] font-normal opacity-60">Aktif</div>
+              </div>
+              <div class="p-2.5 rounded-xl bg-slate-100 text-slate-600">
+                <div>{{ confusion_matrix[0][2] }}</div>
+                <div class="text-[9px] font-normal opacity-60">Lulus</div>
+              </div>
+
+              <div class="p-2.5 rounded-xl bg-slate-100 text-slate-600">
+                <div>{{ confusion_matrix[1][0] }}</div>
+                <div class="text-[9px] font-normal opacity-60">Dropout</div>
+              </div>
+              <div class="p-2.5 rounded-xl bg-amber-400 text-white">
+                <div>{{ confusion_matrix[1][1] }}</div>
+                <div class="text-[9px] font-normal opacity-80">True Aktif</div>
+              </div>
+              <div class="p-2.5 rounded-xl bg-slate-100 text-slate-600">
+                <div>{{ confusion_matrix[1][2] }}</div>
+                <div class="text-[9px] font-normal opacity-60">Lulus</div>
+              </div>
+
+              <div class="p-2.5 rounded-xl bg-slate-100 text-slate-600">
+                <div>{{ confusion_matrix[2][0] }}</div>
+                <div class="text-[9px] font-normal opacity-60">Dropout</div>
+              </div>
+              <div class="p-2.5 rounded-xl bg-slate-100 text-slate-600">
+                <div>{{ confusion_matrix[2][1] }}</div>
+                <div class="text-[9px] font-normal opacity-60">Aktif</div>
+              </div>
+              <div class="p-2.5 rounded-xl bg-[#00875A] text-white">
+                <div>{{ confusion_matrix[2][2] }}</div>
+                <div class="text-[9px] font-normal opacity-80">True Lulus</div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-[10px] text-slate-400 mt-2 px-1">
+              <span>baris: kelas aktual</span>
+              <span>kolom: prediksi</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- ============================================================
+         3. 4 STAT HIGHLIGHTS (PERSIS FOTO DOSEN GAMBAR 2)
+         ============================================================ -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 py-8 border-y border-[#EFECE6] text-center">
+      
+      <!-- Stat 1 -->
+      <div class="p-4 space-y-1">
+        <div class="font-serif text-4xl sm:text-5xl font-bold text-[#00875A]">76%</div>
+        <p class="text-xs text-[#5E6C84] leading-relaxed max-w-[220px] mx-auto">
+          penerima beasiswa berhasil lulus &mdash; hampir <strong>2&times; lipat</strong> non-penerima
+        </p>
+      </div>
+
+      <!-- Stat 2 -->
+      <div class="p-4 space-y-1">
+        <div class="font-serif text-4xl sm:text-5xl font-bold text-amber-600">19,5%</div>
+        <p class="text-xs text-[#5E6C84] leading-relaxed max-w-[220px] mx-auto">
+          kontribusi fitur terbesar: mata kuliah lulus semester 2
+        </p>
+      </div>
+
+      <!-- Stat 3 -->
+      <div class="p-4 space-y-1">
+        <div class="font-serif text-4xl sm:text-5xl font-bold text-rose-600">1.421</div>
+        <p class="text-xs text-[#5E6C84] leading-relaxed max-w-[220px] mx-auto">
+          mahasiswa putus studi &mdash; sinyal dini sangat berharga bagi kampus
+        </p>
+      </div>
+
+      <!-- Stat 4 -->
+      <div class="p-4 space-y-1">
+        <div class="font-serif text-4xl sm:text-5xl font-bold text-[#172B4D]">4.424</div>
+        <p class="text-xs text-[#5E6C84] leading-relaxed max-w-[220px] mx-auto">
+          profil mahasiswa dianalisis lintas 36 dimensi data
+        </p>
+      </div>
+
+    </div>
+
+
+    <!-- ============================================================
+         4. 4 NAVIGATION FEATURE CARDS (PERSIS FOTO DOSEN GAMBAR 2)
+         ============================================================ -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <!-- Card 1: Dashboard Dataset -->
+      <div class="bg-white rounded-3xl border border-[#EFECE6] p-6 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow group">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-pink-100 to-rose-50 text-rose-500 flex items-center justify-center text-xl mb-5 shadow-xs">
+            <i class="fa-solid fa-chart-pie"></i>
+          </div>
+          <h3 class="font-serif text-xl font-bold text-[#172B4D] mb-2 group-hover:text-[#00875A] transition-colors">
+            Dashboard Dataset
+          </h3>
+          <p class="text-xs text-[#5E6C84] leading-relaxed mb-6">
+            Jelajahi 4.424 profil mahasiswa: distribusi kelas, performa akademik, dampak beasiswa, indikator ekonomi makro.
+          </p>
+        </div>
+        <a href="{{ url_for('dataset_page') }}" class="text-xs font-bold text-[#00875A] hover:text-[#006644] flex items-center gap-1.5 transition-colors">
+          Buka &rarr;
+        </a>
+      </div>
+
+      <!-- Card 2: Model Arena -->
+      <div class="bg-white rounded-3xl border border-[#EFECE6] p-6 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow group">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-100 to-yellow-50 text-amber-600 flex items-center justify-center text-xl mb-5 shadow-xs">
+            <i class="fa-solid fa-trophy"></i>
+          </div>
+          <h3 class="font-serif text-xl font-bold text-[#172B4D] mb-2 group-hover:text-[#00875A] transition-colors">
+            Model Arena
+          </h3>
+          <p class="text-xs text-[#5E6C84] leading-relaxed mb-6">
+            Empat algoritma bertanding: Random Forest vs Logistic Regression vs CART vs Naive Bayes &mdash; lengkap dengan confusion matrix.
+          </p>
+        </div>
+        <a href="{{ url_for('model_page') }}" class="text-xs font-bold text-[#00875A] hover:text-[#006644] flex items-center gap-1.5 transition-colors">
+          Buka &rarr;
+        </a>
+      </div>
+
+      <!-- Card 3: Prediksi Live -->
+      <div class="bg-white rounded-3xl border border-[#EFECE6] p-6 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow group">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-pink-100 to-purple-50 text-pink-500 flex items-center justify-center text-xl mb-5 shadow-xs">
+            <i class="fa-solid fa-bullseye"></i>
+          </div>
+          <h3 class="font-serif text-xl font-bold text-[#172B4D] mb-2 group-hover:text-[#00875A] transition-colors">
+            Prediksi Live
+          </h3>
+          <p class="text-xs text-[#5E6C84] leading-relaxed mb-6">
+            Rancang profil mahasiswa dan lihat Random Forest memprediksi kelulusan secara real-time dengan penjelasan faktor.
+          </p>
+        </div>
+        <a href="{{ url_for('prediksi_page') }}" class="text-xs font-bold text-[#00875A] hover:text-[#006644] flex items-center gap-1.5 transition-colors">
+          Buka &rarr;
+        </a>
+      </div>
+
+      <!-- Card 4: AI Insight Studio -->
+      <div class="bg-white rounded-3xl border border-[#EFECE6] p-6 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow group">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-100 to-orange-50 text-amber-500 flex items-center justify-center text-xl mb-5 shadow-xs">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+          </div>
+          <h3 class="font-serif text-xl font-bold text-[#172B4D] mb-2 group-hover:text-[#00875A] transition-colors">
+            AI Insight Studio
+          </h3>
+          <p class="text-xs text-[#5E6C84] leading-relaxed mb-6">
+            Tanya apa saja kepada analis AI yang memahami dataset dan metrik model &mdash; jawaban berbasis angka nyata.
+          </p>
+        </div>
+        <a href="{{ url_for('ai_studio_page') }}" class="text-xs font-bold text-[#00875A] hover:text-[#006644] flex items-center gap-1.5 transition-colors">
+          Buka &rarr;
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+{% endblock %}
